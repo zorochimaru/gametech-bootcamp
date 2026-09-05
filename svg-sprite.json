@@ -1,0 +1,24 @@
+{
+  "dest": "./src/assets/icons",
+  "mode": {
+    "symbol": {
+      "dest": ".",
+      "sprite": "sprite.svg"
+    }
+  },
+  "svg": {
+    "xmlDeclaration": false
+  },
+  "shape": {
+    "id": {
+      "separator": "_"
+    },
+    "transform": [
+      {
+        "svgo": {
+          "plugins": ["removeRasterImages", "removeXMLNS"]
+        }
+      }
+    ]
+  }
+}

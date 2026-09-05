@@ -1,0 +1,23 @@
+:root {
+  --accent-color-rgb: 231, 179, 139;
+  --accent-color: #e7b38b;
+  --accent-fg-color: #5b1f29;
+  --fg-light: #ffffff;
+  --fg-muted: #6e6e6e;
+  --fg-dark: #1b1f37;
+  --btn-bg: #e0e2e4;
+  --btn-bg-active: #c4c6c8;
+  --btn-danger-bg: #ff4646;
+  --btn-success-bg: #86e05c;
+  --bg-surface: #fff;
+  --bg-surface-hover: #cccccc;
+  --border-default: #eee;
+  --border-danger: #ff4646;
+  --header-height: 64px;
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --header-height: 56px;
+  }
+}

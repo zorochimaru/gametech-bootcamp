@@ -1,0 +1,38 @@
+{
+  "extends": ["stylelint-config-recommended-scss"],
+  "plugins": ["stylelint-prettier", "stylelint-scss"],
+  "rules": {
+    "property-no-vendor-prefix": [
+      true,
+      {
+        "ignoreProperties": ["appearance"]
+      }
+    ],
+    "no-descending-specificity": null,
+    "no-empty-source": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["host", "ng-deep", "host-content"]
+      }
+    ],
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["host", "ng-deep", "host-context"]
+      }
+    ],
+    "selector-class-pattern": null,
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/comment-no-empty": null,
+    "scss/double-slash-comment-empty-line-before": null,
+    "scss/double-slash-comment-whitespace-inside": "always",
+    "rule-empty-line-before": [
+      "always",
+      {
+        "ignore": ["after-comment", "first-nested"],
+        "severity": "warning"
+      }
+    ]
+  }
+}

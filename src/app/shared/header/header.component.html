@@ -1,0 +1,16 @@
+<mat-toolbar class="md-tall">
+  <a [routerLink]="['/']" class="logo">
+    <img height="50px" src="assets/images/logo.svg" alt="" />
+  </a>
+
+  <div class="right-panel">
+    @if (isAdmin()) {
+      <a [routerLink]="['/', adminPanelRouterLink]" mat-flat-button>
+        Admin Panel
+      </a>
+    }
+    <button type="button" mat-icon-button (click)="logOut()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

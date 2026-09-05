@@ -1,0 +1,13 @@
+@mixin ellipsis($max-width: 100%) {
+  overflow: hidden;
+  max-width: $max-width;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($rows) {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $rows;
+  display: -webkit-box;
+  overflow: hidden;
+}

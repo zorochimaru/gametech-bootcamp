@@ -1,0 +1,83 @@
+.admin-panel-container {
+  margin-top: 50px;
+}
+
+.table-container {
+  margin-top: 24px;
+  height: 500px;
+  overflow: auto;
+}
+
+.item-row {
+  cursor: pointer;
+}
+
+.criterias-input {
+  flex: 1;
+}
+
+.criterias-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: default;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.img-cell-container img {
+  object-fit: cover;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  height: 500px;
+}
+
+@media screen and (max-width: 768px) {
+  .admin-panel-container {
+    margin-top: 0;
+    height: calc(100svh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .table-container {
+    flex: 1;
+  }
+
+  table {
+    margin-top: 0;
+    height: auto;
+  }
+
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: default;
+  }
+
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+}

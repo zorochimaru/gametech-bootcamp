@@ -1,0 +1,9 @@
+@if (!isImgLoaded()) {
+  <mat-icon class="loading">hourglass_top</mat-icon>
+}
+<img
+  [hidden]="!isImgLoaded()"
+  (click)="close()"
+  [src]="src"
+  (load)="isImgLoaded.set(true)"
+  alt="" />

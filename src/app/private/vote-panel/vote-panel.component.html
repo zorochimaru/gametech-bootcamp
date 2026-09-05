@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="score-container">
+    <div class="score-panel">
+      <form [formGroup]="form">
+        <div class="score-header">
+          <h2>Score</h2>
+          <div class="actions">
+            @if (showSubmitButton()) {
+              <button type="button" mat-fab extended (click)="submitResults()">
+                <mat-icon>check</mat-icon>
+                Submit
+              </button>
+            } @else {
+              <button type="button" mat-fab extended (click)="skipPerson()">
+                <mat-icon>close</mat-icon>
+                SKIP🤷‍♂️
+              </button>
+            }
+          </div>
+        </div>
+        <div formArrayName="results">
+          @for (item of criterias(); track $index; let i = $index) {
+            <div [formGroupName]="i">
+              <label for="score-slider">{{ item.name | titlecase }}</label>
+              <mat-slider
+                id="score-slider"
+                class="score-slider"
+                showTickMarks
+                [min]="0"
+                [max]="10"
+                [step]="1"
+                discrete>
+                <input
+                  matSliderThumb
+                  (valueChange)="saveResult(activePerson()!.id)"
+                  formControlName="score" />
+              </mat-slider>
+            </div>
+          }
+        </div>
+      </form>
+    </div>
+    <div class="selected-item-image">
+      <swiper-container
+        #imageSwiper
+        (swiperslidechange)="onScoreChange()"
+        slides-per-view="1">
+        @for (person of personsList(); track $index) {
+          <swiper-slide>
+            <div
+              class="active-image-container"
+              [style.cursor]="!person.image ? 'default' : 'pointer'">
+              <img
+                [class.small-image]="!person.image"
+                (click)="zoomImage(person.image || '')"
+                [src]="person.image || 'assets/images/small-logo.svg'"
+                alt="" />
+              @if (!person.image) {
+                <span class="no-image-label">{{ person.name }}</span>
+              }
+            </div>
+          </swiper-slide>
+        }
+      </swiper-container>
+    </div>
+    <div class="description-panel">
+      <h2>Description</h2>
+      <ul>
+        @for (item of descriptionInfo(); track $index) {
+          <li>
+            <span class="description-label">{{ item.label | titlecase }}:</span>
+            <span class="description-value">{{ item.value }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="vote-items-container">
+  <swiper-container
+    #previewSwiper
+    space-between="10"
+    centered-slides="true"
+    centered-slides-bounds="true"
+    slides-per-view="auto">
+    @for (person of personsList(); track $index; let i = $index) {
+      <swiper-slide>
+        <button
+          type="button"
+          [class.voted-card]="isPersonVoted(person.id)"
+          [class.active-card]="activePersonIndex() === i"
+          class="vote-item"
+          (click)="selectActivePerson(i)">
+          <span class="order">{{ person.order }}</span>
+          <img
+            class="preview-image"
+            [class.small-image]="!person.image"
+            [src]="person.image || 'assets/images/small-logo.svg'"
+            alt="" />
+        </button>
+      </swiper-slide>
+    }
+  </swiper-container>
+</div>

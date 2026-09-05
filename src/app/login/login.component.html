@@ -1,0 +1,61 @@
+<mat-card appearance="outlined" class="login-container">
+  <mat-card-content>
+    <h2>Login</h2>
+    @if (!isProd) {
+      <mat-button-toggle-group class="toggle" [formControl]="modeControl">
+        <mat-button-toggle [value]="true">SignIn</mat-button-toggle>
+        <mat-button-toggle [value]="false">SignUp</mat-button-toggle>
+      </mat-button-toggle-group>
+    }
+    @if (!modeControl.value) {
+      <mat-button-toggle-group class="toggle" [formControl]="roleControl">
+        @for (type of registerTypes(); track $index) {
+          <mat-button-toggle [value]="type">{{ type }}</mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    }
+    <form [formGroup]="form" class="form-group">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="Enter your email" />
+        @if (
+          form.controls.email.hasError("email") &&
+          !form.controls.email.hasError("required")
+        ) {
+          <mat-error>Please enter a valid email address</mat-error>
+        }
+        @if (form.controls.email.hasError("required")) {
+          <mat-error>Email is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="password"
+          placeholder="Enter your password" />
+        @if (
+          form.controls.email.hasError("minLength") &&
+          !form.controls.email.hasError("required")
+        ) {
+          <mat-error>Password must be 6 symbols at least</mat-error>
+        }
+        @if (form.controls.email.hasError("required")) {
+          <mat-error>Password is <strong>required</strong></mat-error>
+        }
+      </mat-form-field>
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+        mat-stroked-button
+        (click)="onSubmit()">
+        Submit
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
