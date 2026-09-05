@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "game-summit-vote": {
+    "gametech-bootcamp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -40,7 +40,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/game-summit-vote",
+            "outputPath": "dist/gametech-bootcamp",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [],
@@ -87,10 +87,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "game-summit-vote:build:production"
+              "buildTarget": "gametech-bootcamp:build:production"
             },
             "development": {
-              "buildTarget": "game-summit-vote:build:development"
+              "buildTarget": "gametech-bootcamp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -102,12 +102,12 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "game-summit-vote:build:production",
-              "serveTarget": "game-summit-vote:serve:production"
+              "buildTarget": "gametech-bootcamp:build:production",
+              "serveTarget": "gametech-bootcamp:serve:production"
             },
             "development": {
-              "buildTarget": "game-summit-vote:build:development",
-              "serveTarget": "game-summit-vote:serve:development"
+              "buildTarget": "gametech-bootcamp:build:development",
+              "serveTarget": "gametech-bootcamp:serve:development"
             }
           },
           "defaultConfiguration": "production"

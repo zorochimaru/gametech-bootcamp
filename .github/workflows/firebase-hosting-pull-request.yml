@@ -25,8 +25,8 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GAMESUMMIT_JURY }}
-          projectId: gamesummit-jury
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GAMETECH_BOOTCAMP }}
+          projectId: gametech-bootcamp
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
 
