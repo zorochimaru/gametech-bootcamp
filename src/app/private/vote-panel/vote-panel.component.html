@@ -19,15 +19,24 @@
           </div>
         </div>
         <div formArrayName="results">
-          @for (item of criterias(); track $index; let i = $index) {
+          @for (item of criteria(); track $index; let i = $index) {
             <div [formGroupName]="i">
-              <label for="score-slider">{{ item.name | titlecase }}</label>
+              <div class="category-header">
+                <label for="score-slider">{{ item.name | titlecase }}</label>
+                <mat-icon
+                  #tooltip="matTooltip"
+                  (click)="tooltip.toggle()"
+                  [matTooltip]="item.description"
+                  matTooltipPosition="right">
+                  info
+                </mat-icon>
+              </div>
               <mat-slider
                 id="score-slider"
                 class="score-slider"
                 showTickMarks
-                [min]="0"
-                [max]="10"
+                [min]="1"
+                [max]="5"
                 [step]="1"
                 discrete>
                 <input
@@ -47,32 +56,16 @@
         slides-per-view="1">
         @for (person of personsList(); track $index) {
           <swiper-slide>
-            <div
-              class="active-image-container"
-              [style.cursor]="!person.image ? 'default' : 'pointer'">
+            <div class="active-image-container">
+              <span class="no-image-label">{{ person.name }}</span>
               <img
-                [class.small-image]="!person.image"
-                (click)="zoomImage(person.image || '')"
-                [src]="person.image || 'assets/images/small-logo.svg'"
+                class="preview-image"
+                src="assets/images/background.jpg"
                 alt="" />
-              @if (!person.image) {
-                <span class="no-image-label">{{ person.name }}</span>
-              }
             </div>
           </swiper-slide>
         }
       </swiper-container>
-    </div>
-    <div class="description-panel">
-      <h2>Description</h2>
-      <ul>
-        @for (item of descriptionInfo(); track $index) {
-          <li>
-            <span class="description-label">{{ item.label | titlecase }}:</span>
-            <span class="description-value">{{ item.value }}</span>
-          </li>
-        }
-      </ul>
     </div>
   </div>
 </div>
@@ -92,10 +85,10 @@
           class="vote-item"
           (click)="selectActivePerson(i)">
           <span class="order">{{ person.order }}</span>
+          <span class="list-card-name">{{ person.name }}</span>
           <img
-            class="preview-image"
-            [class.small-image]="!person.image"
-            [src]="person.image || 'assets/images/small-logo.svg'"
+            class="small-imagepreview-image"
+            src="assets/images/background.jpg"
             alt="" />
         </button>
       </swiper-slide>

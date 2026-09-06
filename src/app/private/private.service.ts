@@ -6,34 +6,22 @@ import { FirestoreCollections, VoteTypes } from '../core';
 export class PrivateService {
   public mapTypeToResultsCollection(type: VoteTypes): FirestoreCollections {
     switch (type) {
-      case VoteTypes.cosplay:
-        return FirestoreCollections.cosplaySoloResults;
-      case VoteTypes.cosplayTeam:
-        return FirestoreCollections.cosplayTeamResults;
-      case VoteTypes.kpop:
-        return FirestoreCollections.kPopResults;
+      case VoteTypes.teams:
+        return FirestoreCollections.results;
     }
   }
 
   public mapTypeToCollection(type: VoteTypes): FirestoreCollections {
     switch (type) {
-      case VoteTypes.cosplay:
-        return FirestoreCollections.cosplaySolo;
-      case VoteTypes.cosplayTeam:
-        return FirestoreCollections.cosplayTeams;
-      case VoteTypes.kpop:
-        return FirestoreCollections.kPop;
+      case VoteTypes.teams:
+        return FirestoreCollections.teams;
     }
   }
 
   public mapTypeToCriteriaCollection(type: VoteTypes): FirestoreCollections {
     switch (type) {
-      case VoteTypes.cosplay:
-        return FirestoreCollections.cosplaySoloCriteria;
-      case VoteTypes.cosplayTeam:
-        return FirestoreCollections.cosplayTeamCriteria;
-      case VoteTypes.kpop:
-        return FirestoreCollections.kPopCriteria;
+      case VoteTypes.teams:
+        return FirestoreCollections.criteria;
     }
   }
 }

@@ -1,15 +1,7 @@
 :host {
-  margin-top: 32px;
-  height: 100%;
   display: grid;
   place-items: center;
-
-  .cards-container {
-    display: flex;
-    flex-direction: column;
-    min-width: 30%;
-    gap: 1rem;
-  }
+  min-height: calc(100vh - 65px);
 
   .card-link {
     cursor: pointer;
@@ -23,8 +15,9 @@
     gap: 1rem;
     font-size: 2rem;
     border-radius: 1em;
-    background: linear-gradient(270deg, #4da0d4 0%, #d2418d 100%);
+    background: linear-gradient(270deg, #2e27e1 0%, #952270 100%);
     border: 2px solid #fff;
+    font-family: 'BruceForever', serif;
 
     mat-icon {
       --icon-size: 5rem;

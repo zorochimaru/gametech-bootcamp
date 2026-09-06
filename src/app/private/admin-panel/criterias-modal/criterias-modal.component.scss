@@ -11,10 +11,5 @@
 .actions-container {
   display: flex;
   margin-top: 20px;
-  justify-content: flex-end;
-
-  button {
-    width: 100%;
-  }
+  justify-content: space-between;
 }
-

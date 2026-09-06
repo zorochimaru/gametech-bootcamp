@@ -17,7 +17,6 @@ import { forkJoin, map } from 'rxjs';
 import { AuthService, FirestoreService, Roles, VoteTypes } from '../../core';
 import { CommonResultFirestore } from '../core';
 import { PrivateService } from '../private.service';
-import { ImageDialogComponent } from '../shared';
 
 interface PersonScore {
   personName: string;
@@ -158,22 +157,16 @@ export class ResultsComponent implements OnInit, AfterViewInit {
     return Object.values(personScoresMap);
   }
 
-  protected openDetails(row: any): void {
-    if (!row.personImg) {
-      return;
-    }
-    this.#dialog.open(ImageDialogComponent, {
-      data: row.personImg,
-      autoFocus: '__non_existing_element__'
-    });
-  }
-
   #mapPersonScoresToArray(
     personScores: PersonScore[]
   ): Record<string, string | number>[] {
     return personScores.map(personScore => {
       const { personName, personImg, totalScores } = personScore;
-      const totalScore = Object.values(totalScores).reduce((a, b) => a + b, 0);
+      const totalScore = Number(
+        Object.values(totalScores)
+          .reduce((a, b) => a + b, 0)
+          .toFixed(2)
+      );
       return { personName, personImg, totalScore, ...totalScores };
     });
   }

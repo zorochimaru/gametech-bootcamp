@@ -10,15 +10,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./login/login.component').then(c => c.LoginComponent)
   },
-  // {
-  //   path: RouterLinks.googleLogin,
-  //   providers: [AuthService],
-  //   canMatch: [loginGuard],
-  //   loadComponent: () =>
-  //     import('./google-login/google-login.component').then(
-  //       c => c.GoogleLoginComponent
-  //     )
-  // },
   {
     path: '',
     providers: [AuthService],

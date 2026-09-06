@@ -39,8 +39,14 @@
   margin-bottom: 24px;
 }
 
-.img-cell-container img {
-  object-fit: cover;
+.divider {
+  margin: 24px 0;
+}
+
+.right-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
 }
 
 table {

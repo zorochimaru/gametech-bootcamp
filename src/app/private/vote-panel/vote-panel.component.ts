@@ -22,6 +22,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, filter, map, Observable, switchMap } from 'rxjs';
 import { SwiperContainer } from 'swiper/element';
@@ -43,7 +44,7 @@ import {
 } from '../core';
 import { CommonVoteItemFirestore } from '../core/interfaces/common-vote-item-firestore.interface';
 import { PrivateService } from '../private.service';
-import { ConfirmDialogComponent, ImageDialogComponent } from '../shared';
+import { ConfirmDialogComponent } from '../shared';
 
 type TResultsArray = FormArray<TypedForm<Score>>;
 
@@ -55,7 +56,8 @@ type TResultsArray = FormArray<TypedForm<Score>>;
     ReactiveFormsModule,
     FormsModule,
     MatIconModule,
-    TitleCasePipe
+    TitleCasePipe,
+    MatTooltipModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -79,7 +81,7 @@ export class VotePanelComponent implements OnInit {
   protected readonly type = toSignal<VoteTypes>(
     this.#route.queryParams.pipe(map(params => params[queryParamKeys.voteType]))
   );
-  protected readonly criterias = signal<CriteriaFirestore[]>([]);
+  protected readonly criteria = signal<CriteriaFirestore[]>([]);
   protected readonly personsList = signal<CommonVoteItemFirestore[]>([]);
 
   protected readonly activePerson = signal<CommonVoteItemFirestore | null>(
@@ -152,16 +154,6 @@ export class VotePanelComponent implements OnInit {
     );
   }
 
-  protected zoomImage(src: string): void {
-    if (!src) {
-      return;
-    }
-    this.#dialog.open(ImageDialogComponent, {
-      data: src,
-      autoFocus: '__non_existing_element__'
-    });
-  }
-
   protected selectActivePerson(index: number): void {
     this.imageSwiper()?.nativeElement?.swiper?.slideTo(index);
     this.onScoreChange();
@@ -178,23 +170,50 @@ export class VotePanelComponent implements OnInit {
 
     this.form.patchValue({
       personId: newPerson.id,
-      personName: newPerson.name,
-      personImg: newPerson.image || ''
+      personName: newPerson.name
     });
 
     for (const group of this.resultsControl.controls) {
       const score = this.#finalResults()
         .get(newPerson.id)
         ?.results.find(c => c.criteriaId === group.value.criteriaId)?.score;
-      group.patchValue({ score: score || 0 });
+      group.patchValue({ score: score || 1 });
     }
+  }
+
+  protected saveResult(id: string, skip?: boolean): void {
+    if (skip) {
+      for (const control of this.form.controls.results.controls) {
+        control.patchValue({ score: 0 });
+      }
+    }
+    const result = this.form.getRawValue();
+    this.#finalResults.update(prev => {
+      prev.set(id, result);
+      return new Map(prev);
+    });
+
+    const values = Array.from(this.#finalResults().values());
+    localStorage.setItem(
+      `${this.#currentUserId()}-${this.type()}-form`,
+      JSON.stringify(values)
+    );
   }
 
   protected submitResults(): void {
     this.#dialog.open(ConfirmDialogComponent).closed.subscribe(res => {
       if (res) {
-        const results = Array.from(this.#finalResults().values());
-
+        const results = Array.from(this.#finalResults().values()).map(r => ({
+          ...r,
+          results: r.results.map(res => {
+            const weight =
+              this.criteria().find(c => c.id === res.criteriaId)?.weight || 0;
+            return {
+              ...res,
+              score: Number((res.score * (weight / 100)).toFixed(2))
+            };
+          })
+        }));
         this.#firestoreService
           .create<CommonResultFirestore>(
             this.#privateService.mapTypeToResultsCollection(this.type()!),
@@ -233,26 +252,7 @@ export class VotePanelComponent implements OnInit {
     });
   }
 
-  protected saveResult(id: string, skip?: boolean): void {
-    if (skip) {
-      for (const control of this.form.controls.results.controls) {
-        control.patchValue({ score: 0 });
-      }
-    }
-    const result = this.form.getRawValue();
-    this.#finalResults.update(prev => {
-      prev.set(id, result);
-      return new Map(prev);
-    });
-
-    const values = Array.from(this.#finalResults().values());
-    localStorage.setItem(
-      `${this.#currentUserId()}-${this.type()}-form`,
-      JSON.stringify(values)
-    );
-  }
-
-  #addResultControls(criteria: CriteriaFirestore, score = 0): void {
+  #addResultControls(criteria: CriteriaFirestore, score = 1): void {
     this.resultsControl.push(
       this.#fb.nonNullable.group({
         criteriaId: [criteria.id],
@@ -307,8 +307,7 @@ export class VotePanelComponent implements OnInit {
         // Set active person
         this.form.patchValue({
           personId: persons[0].id,
-          personName: persons[0].name,
-          personImg: persons[0].image || ''
+          personName: persons[0].name
         });
         this.activePerson.set(persons[0]);
 
@@ -330,7 +329,7 @@ export class VotePanelComponent implements OnInit {
 
           this.#addResultControls(criteria, score);
         }
-        this.criterias.set(sortedCriterias);
+        this.criteria.set(sortedCriterias);
       });
   }
 }

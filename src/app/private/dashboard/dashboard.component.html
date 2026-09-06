@@ -1,24 +1,21 @@
-<div class="cards-container">
-  @if (showResultsLink()) {
-    <mat-card
-      appearance="outlined"
-      class="card-link"
-      matRipple
-      [routerLink]="['/', resultsRouterLink]">
-      <mat-icon>emoji_events</mat-icon>
-      <span>Results</span>
-    </mat-card>
-  }
+@if (showResultsLink()) {
+  <mat-card
+    appearance="outlined"
+    class="card-link"
+    matRipple
+    [routerLink]="['/', resultsRouterLink]">
+    <mat-icon>emoji_events</mat-icon>
+    <span>Results</span>
+  </mat-card>
+}
 
-  @for (item of cardLinks(); track $index) {
-    <mat-card
-      appearance="outlined"
-      class="card-link"
-      matRipple
-      [routerLink]="['/', votePanelRouterLink()]"
-      [queryParams]="{ voteType: item.type }">
-      <img [src]="'assets/images/' + item.icon" alt="" />
-      <span>{{ item.title }}</span>
-    </mat-card>
-  }
-</div>
+@for (item of cardLinks(); track $index) {
+  <mat-card
+    appearance="outlined"
+    class="card-link"
+    matRipple
+    [routerLink]="['/', votePanelRouterLink]"
+    [queryParams]="{ voteType: item.type }">
+    <span>{{ item.title }}</span>
+  </mat-card>
+}

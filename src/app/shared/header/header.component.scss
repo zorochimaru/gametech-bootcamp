@@ -1,14 +1,14 @@
 :host {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  height: var(--header-height);
   border-bottom: 1px solid var(--border-default);
 }
 
 .logo {
   display: flex;
   margin-inline: auto;
+
+  img {
+    max-width: 90%;
+  }
 }
 
 .right-panel {

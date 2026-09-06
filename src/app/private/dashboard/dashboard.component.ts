@@ -9,7 +9,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
-import { AuthService, Roles, RouterLinks } from '../../core';
+import { AuthService, RouterLinks } from '../../core';
 import { dashboardCards } from '../core/constants';
 
 @Component({
@@ -27,6 +27,7 @@ export class DashboardComponent {
     if (!authUser) {
       return [];
     }
+
     return dashboardCards[authUser.role].filter(
       card => !authUser.votedTypes.includes(card.type)
     );
@@ -35,19 +36,14 @@ export class DashboardComponent {
   protected readonly showResultsLink = computed(() => {
     const authUser = this.#authService.authUser();
     if (!authUser) {
-      return [];
+      return false;
     }
+
     return dashboardCards[authUser.role].some(card =>
       authUser?.votedTypes.includes(card.type)
     );
   });
 
-  protected readonly votePanelRouterLink = computed(() => {
-    const authUser = this.#authService.authUser();
-    return authUser?.role === Roles.user
-      ? RouterLinks.starsVotePanel
-      : RouterLinks.votePanel;
-  });
-
-  protected resultsRouterLink = RouterLinks.results;
+  protected readonly votePanelRouterLink = RouterLinks.votePanel;
+  protected readonly resultsRouterLink = RouterLinks.results;
 }

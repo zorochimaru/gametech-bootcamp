@@ -11,7 +11,7 @@ import {
 import { catchError, from, map, Observable, of } from 'rxjs';
 
 import { FirebaseProvider } from '../firebase-provider';
-import { AuthUser, VoteTypes } from '../interfaces';
+import { AuthUser } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -34,22 +34,6 @@ export class AuthService {
 
   public setCurrentUser(user: AuthUser): void {
     this.authUser.set(user);
-  }
-
-  public decrementUserStarsLocally(type: VoteTypes): void {
-    const user = this.authUser();
-    if (user) {
-      this.authUser.update(user => {
-        if (!user) return user;
-        return {
-          ...user,
-          stars: {
-            ...user.stars!,
-            [type]: (user.stars![type] ?? 0) - 1
-          }
-        };
-      });
-    }
   }
 
   public signIn(email: string, password: string): Observable<UserCredential> {
