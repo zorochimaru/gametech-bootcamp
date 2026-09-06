@@ -2,7 +2,7 @@
   margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 40px;
   justify-content: center;
 }
 
@@ -226,7 +226,7 @@ swiper-slide {
 
   .score-panel {
     order: 2;
-    width: 100%;
+    margin-right: 20%;
   }
 
   .selected-item-image {
